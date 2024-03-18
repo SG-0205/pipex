@@ -6,7 +6,7 @@
 /*   By: sgoldenb <sgoldenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 20:05:00 by sgoldenb          #+#    #+#             */
-/*   Updated: 2024/03/15 11:49:00 by sgoldenb         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:59:35 by sgoldenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,25 @@ void	clear_data(t_pipex *data)
 		del_cmd(data);
 }
 
-int	**create_fd(t_pipex *data)
+t_bool	create_fd(t_pipex *data)
 {
-	//MAKE FD WHILE
+	int	i;
+
+	i = -1;
+	data->fds = (int **)malloc(sizeof(int *) * 7);
+	if (!data->fds)
+		return (FALSE);
+	data->fds[7] = NULL;
+	while (data->fds[++i])
+	{
+		data->fds[i] = (int *)malloc(sizeof(int));
+		if (!data->fds[i])
+			return (FALSE);
+	}
+	return (TRUE);
 }
 
-void	get_path(t_pipex *data)
+t_bool	get_path(t_pipex *data)
 {
 	int		i;
 	char	**env;
@@ -65,16 +78,32 @@ void	get_path(t_pipex *data)
 	while (ft_strncmp(env[++i], "PATH=", 5) != 0)
 		;
 	data->path_env = (char **)malloc(sizeof(char *) * 2);
+	data->path_env[1] = NULL;
 	if (!data->path_env)
-		(ft_printf("get_path : %s\n", strerror(ENOMEM)),
-			data->path_env[1] = NULL);
+		return (FALSE);
 	data->path_env[0] = ft_strdup(env[i]);
 	if (!data->path_env[0])
-		ft_printf("get_path : %s\n", strerror(ENOMEM));
+		return (FALSE);
+	return (TRUE);
 }
 
-void	init_data(t_pipex *data, char **argv)
+t_bool	init_data(t_pipex *data, char **argv)
 {
-	(void)data;
-	(void)argv;
+	data->f1_path = ft_strdup(argv[1]);
+	if (!data->f1_path)
+		return (FALSE);
+	data->f2_path = ft_strdup(argv[4]);
+	if (data->f2_path)
+		return (FALSE);
+	if (get_path(data) == FALSE)
+	{
+		ft_printf("get_path : %s\n", strerror(ENOMEM));
+		return (FALSE);
+	}
+	if (create_fd(data) == FALSE)
+	{
+		ft_printf("create_fd : %s\n", strerror(ENOMEM));
+		return (FALSE);
+	}
+	//CREATE CMDS
 }

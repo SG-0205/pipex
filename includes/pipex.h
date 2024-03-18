@@ -6,7 +6,7 @@
 /*   By: sgoldenb <sgoldenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:48:27 by sgoldenb          #+#    #+#             */
-/*   Updated: 2024/03/15 11:37:21 by sgoldenb         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:00:27 by sgoldenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_pipex
 
 void	clear_data(t_pipex *data);
 void	del_cmd(t_pipex *data);
-void	get_path(t_pipex *data);
-void	init_data(t_pipex *data, char **argv);
+t_bool	get_path(t_pipex *data);
+t_bool	init_data(t_pipex *data, char **argv);
 
 #endif
