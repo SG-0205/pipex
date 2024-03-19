@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrdup.c                                        :+:      :+:    :+:   */
+/*   ft_strjoinsep.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgoldenb <sgoldenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 10:43:31 by sgoldenb          #+#    #+#             */
-/*   Updated: 2024/03/19 15:35:07 by sgoldenb         ###   ########.fr       */
+/*   Created: 2024/03/19 17:18:50 by sgoldenb          #+#    #+#             */
+/*   Updated: 2024/03/19 17:20:03 by sgoldenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+// #include <stdio.h>
 
-void	ft_arrdup(void **dst, void **src)
+char	*ft_strjoinsep(const char *s1, char const *s2, char sep)
 {
-	int	i;
+	char	*new_str;
 
-	if (!dst || !src)
-		return ;
-	i = -1;
-	while (src[++i])
-	{
-		dst[i] = ft_strdup(src[i]);
-		if (!dst[i])
-			return ;
-	}
-	dst[i] = NULL;
+	if (!s1 || !s2)
+		return (NULL);
+	new_str = ft_strnew((ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (!new_str)
+		return (NULL);
+	ft_strcat(new_str, s1);
+	new_str[ft_strlen(new_str)] = sep;
+	ft_strcat(new_str, s2);
+	return (new_str);
 }

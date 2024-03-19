@@ -6,7 +6,7 @@
 /*   By: sgoldenb <sgoldenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:36:00 by sgoldenb          #+#    #+#             */
-/*   Updated: 2024/03/19 12:01:59 by sgoldenb         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:14:45 by sgoldenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	print_pipex(t_pipex *data)
 		return ;
 	}
 	cmd_nb = ft_arrlen((void **)data->cmds);
+	if (data->path_env)
+		ft_printf("ENV : %s\n\n", data->path_env);
 	ft_printf("data : %d commandes\n", cmd_nb);
 	while (++i < cmd_nb)
 	{
@@ -42,10 +44,11 @@ void	print_pipex(t_pipex *data)
 			while (++j < args_nb)
 			{
 				if (data->cmds[i]->argv[j])
-					ft_printf("\t\t-%s\n", data->cmds[i]->argv[j]);
+					ft_printf("\t\t\"%s\"\n", data->cmds[i]->argv[j]);
 				else
 					ft_printf("\t\tNO DATA\n");
 			}
+			ft_printf("\t\t\"%s\"\n", data->cmds[i]->path);
 			ft_printf("--------------------\n");
 			j = -1;
 		}
@@ -53,7 +56,7 @@ void	print_pipex(t_pipex *data)
 	ft_printf("EOS\n\n");
 }
 
-										//TEST CLEAR DATA
+										//TEST CLEAR DATA - OK
 // int	main(void)
 // {
 // 	t_pipex *test = (t_pipex *)malloc(sizeof(t_pipex));
@@ -89,28 +92,34 @@ void	print_pipex(t_pipex *data)
 // }
 
 
-										//TEST INIT CMD - VERIFIER MEMOK
+										//TEST INIT CMD - OK
+// int	main(int argc, char **argv)
+// {
+// 	t_pipex *data;
+
+// 	if (argc != 5)
+// 		return (1);
+// 	data = (t_pipex *)malloc(sizeof(t_pipex));
+// 	if (init_data(data, argv) == FALSE)
+// 		return (1);
+// 	print_pipex(data);
+// 	clear_data(data);
+// 	free(data);
+// 	return (0);
+// }
+
+										//TEST PATH MANIPULATION
 int	main(int argc, char **argv)
 {
-	int i = 0;
-	int j = 0;
-	if (argc != 3)
-		return (1);
-	t_pipex	*test = (t_pipex *)malloc(sizeof(t_pipex));
-	test->cmds = (t_cmd **)malloc(sizeof(t_cmd *) * 3);
-	test->cmds[2] = NULL;
-	for (i = 0; i < 2; ++i)
-	{
-		test->cmds[i] = (t_cmd *)malloc(sizeof(t_cmd));
-		test->cmds[i]->argc = 3;
-		test->cmds[i]->argv = (char **)malloc(sizeof(char *) * 4);
-		test->cmds[i]->argv[3] = NULL;
-		ft_arrdup((void **)test->cmds[i]->argv, (void **)ft_split(argv[i + 1], ' '));
-	}
+	t_pipex *data;
 
-	for (i = 0; test->cmds[i]; ++i)
-		for (j = 0; test->cmds[i]->argv[j]; ++j)
-			ft_printf("[%d][%d] : %s\n", i, j, test->cmds[i]->argv[j]);
+	if (argc != 5)
+		return (1);
+	data = (t_pipex *)malloc(sizeof(t_pipex));
+	if (init_data(data, argv) == FALSE)
+		return (1);
+	print_pipex(data);
+	clear_data(data);
+	free(data);
 	return (0);
 }
-
