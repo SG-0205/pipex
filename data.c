@@ -6,35 +6,11 @@
 /*   By: sgoldenb <sgoldenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 20:05:00 by sgoldenb          #+#    #+#             */
-/*   Updated: 2024/03/18 14:59:35 by sgoldenb         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:17:51 by sgoldenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/pipex.h"
-
-void	del_cmd(t_pipex *data)
-{
-	int	i;
-	int	j;
-
-	if (!data->cmds)
-	{
-		ft_printf("del_cmd : %s\n", strerror(EFAULT));
-		return ;
-	}
-	i = ft_arrlen((void **)data->cmds);
-	while (--i >= 0)
-	{
-		j = ft_arrlen((void **)data->cmds[i]->argv);
-		while (--j >= 0)
-			(free(data->cmds[i]->argv[j]), data->cmds[i]->argc -= 1);
-		free(data->cmds[i]->argv);
-	}
-	i = ft_arrlen((void **)data->cmds);
-	while (--i >= 0)
-		(free(data->cmds[i]), data->cmds[i] = NULL);
-	(free(data->cmds), data->cmds = NULL);
-}
 
 void	clear_data(t_pipex *data)
 {

@@ -6,7 +6,7 @@
 /*   By: sgoldenb <sgoldenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 22:40:57 by sgoldenb          #+#    #+#             */
-/*   Updated: 2024/03/15 10:54:12 by sgoldenb         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:15:51 by sgoldenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);
 int					ft_arrlen(void **array);
-void				ft_frptr(void *ptr);
+void				ft_frptr(void **ptr);
+void				ft_arrdup(void **dst, void **src);
 
 size_t				ft_strlen(const char *s);
 size_t				ft_lentillc(const char *s, char c);
