@@ -6,7 +6,7 @@
 /*   By: sgoldenb <sgoldenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:17:15 by sgoldenb          #+#    #+#             */
-/*   Updated: 2024/03/19 18:03:19 by sgoldenb         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:45:42 by sgoldenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	del_cmd(t_pipex *data)
 	i = ft_arrlen((void **)data->cmds);
 	while (--i > -1)
 	{
-		free(data->cmds[i]->path);
+		if (data->cmds[i]->path)
+			free(data->cmds[i]->path);
 		j = ft_arrlen((void **)data->cmds[i]->argv);
 		while (--j >= 0)
 			(free(data->cmds[i]->argv[j]), data->cmds[i]->argc -= 1);
@@ -49,19 +50,18 @@ t_bool	find_cmd_path(t_pipex *data)
 	i = -1;
 	while (data->cmds[++i])
 	{
+		data->cmds[i]->path = NULL;
 		path = check_access(splitted_path, data->cmds[i]->argv[0], X_OK);
 		if (!path)
 		{
 			ft_printf("find_cmd_path : %s\n", strerror(errno));
-			(clear_data(data), free(data), del_tmp_split(splitted_path));
-			(free(splitted_path), exit(errno));
+			(del_tmp_split(splitted_path), free(splitted_path));
+			return (FALSE);
 		}
 		else
-		{
-			data->cmds[i]->path = ft_strdup(path);
-			free(path);
-		}
+			(data->cmds[i]->path = ft_strdup(path), free(path));
 	}
+	(del_tmp_split(splitted_path), free(splitted_path));
 	return (TRUE);
 }
 
@@ -92,4 +92,3 @@ t_bool	create_cmd(t_pipex *data, char **argv)
 	}
 	return (find_cmd_path(data));
 }
-

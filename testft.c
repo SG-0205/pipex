@@ -6,7 +6,7 @@
 /*   By: sgoldenb <sgoldenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:36:00 by sgoldenb          #+#    #+#             */
-/*   Updated: 2024/03/19 17:14:45 by sgoldenb         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:24:53 by sgoldenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,11 @@ int	main(int argc, char **argv)
 		return (1);
 	data = (t_pipex *)malloc(sizeof(t_pipex));
 	if (init_data(data, argv) == FALSE)
+	{
+		clear_data(data);
+		free(data);
 		return (1);
+	}
 	print_pipex(data);
 	clear_data(data);
 	free(data);

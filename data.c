@@ -6,7 +6,7 @@
 /*   By: sgoldenb <sgoldenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 20:05:00 by sgoldenb          #+#    #+#             */
-/*   Updated: 2024/03/19 17:55:41 by sgoldenb         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:49:25 by sgoldenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,6 @@ t_bool	init_data(t_pipex *data, char **argv)
 		return (FALSE);
 	}
 	if (create_cmd(data, argv) == FALSE)
-	{
-		ft_printf("create_cmd : %s\n", strerror(errno));
 		return (FALSE);
-	}
 	return (TRUE);
 }

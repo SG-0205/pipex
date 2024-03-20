@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_streplace.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgoldenb <sgoldenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 16:47:17 by sgoldenb          #+#    #+#             */
-/*   Updated: 2024/03/20 16:52:42 by sgoldenb         ###   ########.fr       */
+/*   Created: 2024/03/20 16:40:03 by sgoldenb          #+#    #+#             */
+/*   Updated: 2024/03/20 16:47:37 by sgoldenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/pipex.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+char	*ft_streplace(char **old, char *new)
 {
-	t_pipex	*data;
-
-	data = (t_pipex *)malloc(sizeof(t_pipex));
-	if (init_data(data, argv) == FALSE)
-		(clear_data(data), free(data), exit(1));
-	if (argc != 5)
-		(ft_printf(RED BOLD "Mauvais nombre d'arguments\n" RESET),
-				exit(EINVAL));
-	while (1)
-		;
-	return (0);
+	if (!old || !*old)
+		return (NULL);
+	new = ft_strdup(*old);
+	ft_frptr((void **)old);
+	return (new);
 }
